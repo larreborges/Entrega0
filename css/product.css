@@ -1,0 +1,22 @@
+.imagen-class {
+  width: 300px;
+  margin: 20px;
+  float: left;
+}
+
+.texto-centrado {
+  text-align: center;
+  margin: 10px;
+}
+
+.description-class {
+  flex: none;
+flex-wrap: wrap;
+display: inline;
+}
+
+.sold-class {
+margin-bottom: 150px;
+display: inline-block;
+
+}
