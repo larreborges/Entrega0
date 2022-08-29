@@ -1,3 +1,7 @@
+const user = document.getElementById("floatingInput");
+
+localStorage.setItem('username', 'user');
+
 function verifyPassword() {
   const pw = document.getElementById("floatingPassword").value;
   console.log(pw);
@@ -35,3 +39,4 @@ button.addEventListener("click", () => {
     window.location.replace("index.html");
   }
 });
+

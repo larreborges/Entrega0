@@ -45,3 +45,5 @@ if (carData.products) {
 
 populateCarsList();
 
+var cat = localStorage.getItem('username');
+
