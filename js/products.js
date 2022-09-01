@@ -26,8 +26,6 @@ const createCarCard = (carObject) => {
     carCard.appendChild(description);
     carCard.appendChild(sold);
 
-
-
     return carCard;
 }
 
@@ -47,3 +45,11 @@ populateCarsList();
 
 var cat = localStorage.getItem('username');
 
+console.log(cat)
+
+/*function populateUsername() {
+    const noMeLaContainer = document.getElementById('userName');
+    noMeLaContainer.append(cat);
+}
+
+populateUsername();*/
