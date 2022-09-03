@@ -1,12 +1,8 @@
-const user = document.getElementById("floatingInput");
-
-localStorage.setItem('username', 'user');
+let user = document.getElementById("floatingInput").value;
 
 function verifyPassword() {
   const pw = document.getElementById("floatingPassword").value;
-  console.log(pw);
-  debugger
-  //si le saco el debugger deja de funcionar correctamente la página, he intentado con muchas formas y esta es la que me funcionó mejor
+
   if (pw == "") {
     alert("Por favor, llene la contraseña");
     return false;
@@ -28,15 +24,15 @@ function verifyUsername() {
   if (un == "") {
     alert("Por favor, complete el email");
     return false;
-  } else {
+  } 
     return true;
   }
-}
 
-const button = document.getElementById("btn");
-button.addEventListener("click", () => {
-  if (verifyPassword() && verifyUsername()) {
-    window.location.replace("index.html");
+var button = document.getElementById("btn");
+button.addEventListener("click", function(){
+  if (verifyUsername() && verifyPassword()){
+    document.location.href = 'index.html';
   }
 });
 
+localStorage.setItem('username', user);
