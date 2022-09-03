@@ -1,4 +1,6 @@
-let user = document.getElementById("floatingInput").value;
+let user = document.getElementById("floatingInput");
+
+let user2 = JSON.stringify(user)
 
 function verifyPassword() {
   const pw = document.getElementById("floatingPassword").value;
@@ -35,4 +37,5 @@ button.addEventListener("click", function(){
   }
 });
 
-localStorage.setItem('username', user);
+localStorage.setItem('username', user2);
+

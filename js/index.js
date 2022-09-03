@@ -12,3 +12,13 @@ document.addEventListener("DOMContentLoaded", function(){
         window.location = "products.html"
     });
 });
+
+
+
+function titular() {
+    var cat = JSON.parse(localStorage.getItem('username'));
+    console.log(cat)
+    document.getElementById("userName").innerHTML = cat;
+}
+
+titular();
