@@ -21,6 +21,8 @@ const createCarCard = (carObject) => {
     image.src = carObject.image
     image.classList.add('imagen-class');
 
+
+
     carCard.appendChild(image);
     carCard.appendChild(title);
     carCard.appendChild(description);
@@ -43,4 +45,10 @@ if (carData.products) {
 
 populateCarsList();
 
-populateUsername();
+const populateCatID = async () => {
+    const carID = await getCarData;
+
+    localStorage.setItem('catID', carID.catID);
+}
+
+populateCatID();
