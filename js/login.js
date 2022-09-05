@@ -1,4 +1,4 @@
-let user = document.getElementById("floatingInput");
+let user = document.getElementById("floatingInput").value;
 
 let user2 = JSON.stringify(user)
 

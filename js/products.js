@@ -102,7 +102,6 @@ const populateCatID = async () => {
     localStorage.setItem('catID', carID.catID);
 }
 
-
 populateCatID();
 
 
