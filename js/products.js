@@ -2,7 +2,49 @@ const getCarData = fetch('https://japceibal.github.io/emercado-api/cats_products
 .then(response => response.json())
 .then(response => (response))
 
+const ORDER_ASC_BY_NAME = "AZ";
+const ORDER_DESC_BY_NAME = "ZA";
+const ORDER_BY_PROD_COUNT = "Cant.";
+let cars = [];
+let currentCategoriesArray = []; //cambiar cars por currentCategoriesArray
+let currentSortCriteria = undefined;
+let minCount = undefined;
+let maxCount = undefined;
+
+function sortCategories(criteria, array){
+    let result = [];
+    if (criteria === ORDER_ASC_BY_NAME)
+    {
+        result = array.sort(function(a, b)
+        {
+            
+            if ( a.name < b.name ){ return -1; }
+            if ( a.name > b.name ){ return 1; }
+            return 0;
+        });
+        
+    }else if (criteria === ORDER_DESC_BY_NAME){
+        result = array.sort(function(a, b) {
+            if ( a.name > b.name ){ return -1; }
+            if ( a.name < b.name ){ return 1; }
+            return 0;
+        });
+    }else if (criteria === ORDER_BY_PROD_COUNT){
+        result = array.sort(function(a, b) {
+            let aCount = parseInt(a.soldCount);
+            let bCount = parseInt(b.soldCount);
+
+            if ( aCount > bCount ){ return -1; }
+            if ( aCount < bCount ){ return 1; }
+            return 0;
+        });
+    }
+
+    return result;
+}
+
 const createCarCard = (carObject) => {
+    
     const carCard = document.createElement('div');
     carCard.setAttribute('id', carObject.id);
 
@@ -21,8 +63,6 @@ const createCarCard = (carObject) => {
     image.src = carObject.image
     image.classList.add('imagen-class');
 
-
-
     carCard.appendChild(image);
     carCard.appendChild(title);
     carCard.appendChild(description);
@@ -36,14 +76,25 @@ const populateCarsList = async () => {
 
 if (carData.products) {
         const carListContainer = document.getElementById('cars-list-container');
-        const cars = carData.products;
+        cars = carData.products;
+
+        //for(let i = 0; i < currentCategoriesArray.length; i++){
+            //let category = currentCategoriesArray[i];
+
         cars.forEach(function(carData) {
             carListContainer.appendChild(createCarCard(carData));
+            
         })
     }
 }
 
 populateCarsList();
+
+function pepe() {
+    cars = "carData.products"
+}
+
+pepe()
 
 const populateCatID = async () => {
     const carID = await getCarData;
@@ -51,4 +102,81 @@ const populateCatID = async () => {
     localStorage.setItem('catID', carID.catID);
 }
 
+
 populateCatID();
+
+
+function sortAndShowCategories(sortCriteria, categoriesArray){
+    currentSortCriteria = sortCriteria;
+    console.log(currentSortCriteria)
+    
+    if(categoriesArray != undefined){
+        currentCategoriesArray = categoriesArray;
+    }
+    
+    currentCategoriesArray = sortCategories(currentSortCriteria, currentCategoriesArray);
+
+    //Muestro las categorías ordenadas
+    populateCarsList();
+}
+
+console.log(cars)
+
+document.getElementById('sortAsc').addEventListener('click', function(){
+    console.log("hola")
+    sortAndShowCategories(ORDER_ASC_BY_NAME);
+    console.log('chau')
+})
+
+document.getElementById('sortDesc').addEventListener('click', function(){
+    sortAndShowCategories(ORDER_DESC_BY_NAME);
+})
+
+document.getElementById('sortByCount').addEventListener('click', function(){
+    sortAndShowCategories(ORDER_BY_PROD_COUNT);
+})
+
+document.getElementById("clearRangeFilter").addEventListener("click", function(){
+    document.getElementById("rangeFilterCountMin").value = "";
+    document.getElementById("rangeFilterCountMax").value = "";
+
+    minCount = undefined;
+    maxCount = undefined;
+
+    populateCarsList();
+});
+
+function sortAndShowCategories(sortCriteria, categoriesArray){
+    currentSortCriteria = sortCriteria;
+
+    if(categoriesArray != undefined){
+        currentCategoriesArray = categoriesArray;
+    }
+
+    currentCategoriesArray = sortCategories(currentSortCriteria, currentCategoriesArray);
+
+
+}
+
+
+
+    document.getElementById("rangeFilterCount").addEventListener("click", function(){
+        minCount = document.getElementById("rangeFilterCountMin").value;
+        maxCount = document.getElementById("rangeFilterCountMax").value;
+
+
+        if ((minCount != undefined) && (minCount != "") && (parseInt(minCount)) >= 0){
+            minCount = parseInt(minCount);
+        }
+        else{
+            minCount = undefined;
+        }
+
+        if ((maxCount != undefined) && (maxCount != "") && (parseInt(maxCount)) >= 0){
+            maxCount = parseInt(maxCount);
+        }
+        else{
+            maxCount = undefined;
+        }
+        populateCarsList();
+    });
