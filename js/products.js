@@ -39,8 +39,9 @@ function sortCategories(criteria, array){
             return 0;
         });
     }
-
+    console.log(result)
     return result;
+    
 }
 
 const createCarCard = (carObject) => {
@@ -77,7 +78,7 @@ const populateCarsList = async () => {
 if (carData.products) {
         const carListContainer = document.getElementById('cars-list-container');
         cars = carData.products;
-
+        
         //for(let i = 0; i < currentCategoriesArray.length; i++){
             //let category = currentCategoriesArray[i];
 
@@ -95,6 +96,7 @@ function pepe() {
 }
 
 pepe()
+
 
 const populateCatID = async () => {
     const carID = await getCarData;
@@ -114,16 +116,13 @@ function sortAndShowCategories(sortCriteria, categoriesArray){
     }
     
     currentCategoriesArray = sortCategories(currentSortCriteria, currentCategoriesArray);
-
     //Muestro las categorías ordenadas
     populateCarsList();
 }
 
-console.log(cars)
-
 document.getElementById('sortAsc').addEventListener('click', function(){
     console.log("hola")
-    sortAndShowCategories(ORDER_ASC_BY_NAME);
+    sortAndShowCategories(ORDER_ASC_BY_NAME, cars);
     console.log('chau')
 })
 
@@ -157,8 +156,6 @@ function sortAndShowCategories(sortCriteria, categoriesArray){
 
 }
 
-
-
     document.getElementById("rangeFilterCount").addEventListener("click", function(){
         minCount = document.getElementById("rangeFilterCountMin").value;
         maxCount = document.getElementById("rangeFilterCountMax").value;
@@ -179,3 +176,4 @@ function sortAndShowCategories(sortCriteria, categoriesArray){
         }
         populateCarsList();
     });
+
