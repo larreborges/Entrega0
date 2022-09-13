@@ -6,7 +6,7 @@ const ORDER_ASC_BY_NAME = "AZ";
 const ORDER_DESC_BY_NAME = "ZA";
 const ORDER_BY_PROD_COUNT = "Cant.";
 let cars = [];
-let currentCategoriesArray = []; //cambiar cars por currentCategoriesArray
+let currentCategoriesArray = [];
 let currentSortCriteria = undefined;
 let minCount = undefined;
 let maxCount = undefined;
@@ -41,61 +41,13 @@ function sortCategories(criteria, array){
     }
     console.log(result)
     return result;
-    
 }
-
-/*const createCarCard = (carObject) => {
-    
-    const carCard = document.createElement('div');
-    carCard.setAttribute('id', carObject.id);
-
-    const title = document.createElement('h3');
-    title.append(carObject.name + " - USD " + carObject.cost)
-
-    const description = document.createElement('p');
-    description.append(carObject.description);
-    description.classList.add('description-class');
-
-    const sold = document.createElement('p');
-    sold.append(carObject.soldCount + " vendidos");
-    sold.classList.add('sold-class');
-
-    const image = document.createElement('img');
-    image.src = carObject.image
-    image.classList.add('imagen-class');
-
-    carCard.appendChild(image);
-    carCard.appendChild(title);
-    carCard.appendChild(description);
-    carCard.appendChild(sold);
-
-    return carCard;
-}*/
-
-/*const populateCarsList = async () => {
-    const carData = await getCarData;
-    console.log(cars)
-if (carData.products) {
-        const carListContainer = document.getElementById('cars-list-container');
-        cars = carData.products;
-        cars.forEach(function(carData) {
-            carListContainer.appendChild(createCarCard(carData));
-        })
-    }
-}
-
-populateCarsList();*/
 
 const populateCatID = async () => {
     const carID = await getCarData;
-
     localStorage.setItem('catID', carID.catID);
 }
-
 populateCatID();
-
-
-
 
 document.getElementById('sortAsc').addEventListener('click', function(){
     sortAndShowCategories(ORDER_ASC_BY_NAME, cars);
@@ -106,23 +58,20 @@ document.getElementById('sortDesc').addEventListener('click', function(){
 })
 
 document.getElementById('sortByCount').addEventListener('click', function(){
-    sortAndShowCategories(ORDER_BY_PROD_COUNT,);
+    sortAndShowCategories(ORDER_BY_PROD_COUNT, cars);
 })
 
 document.getElementById("clearRangeFilter").addEventListener("click", function(){
     document.getElementById("rangeFilterCountMin").value = "";
     document.getElementById("rangeFilterCountMax").value = "";
-
     minCount = undefined;
     maxCount = undefined;
-
     showCategoriesList();
 });
 
     document.getElementById("rangeFilterCount").addEventListener("click", function(){
         minCount = document.getElementById("rangeFilterCountMin").value;
         maxCount = document.getElementById("rangeFilterCountMax").value;
-
 
         if ((minCount != undefined) && (minCount != "") && (parseInt(minCount)) >= 0){
             minCount = parseInt(minCount);
@@ -140,9 +89,13 @@ document.getElementById("clearRangeFilter").addEventListener("click", function()
         showCategoriesList();
     });
 
+    function setCatID(id) {
+        localStorage.setItem("catID", id);
+        window.location = "product-info.html"
+    }
+
     const showCategoriesList = async () => {
         const carData = await getCarData;
-        console.log(cars)
             cars = carData.products
         let htmlContentToAppend = "";
         for(let i = 0; i < cars.length; i++){
@@ -173,7 +126,7 @@ document.getElementById("clearRangeFilter").addEventListener("click", function()
         }
     }
 
-    showCategoriesList();
+    showCategoriesList()
 
     function sortAndShowCategories(sortCriteria, categoriesArray){
         currentSortCriteria = sortCriteria;
@@ -185,3 +138,53 @@ document.getElementById("clearRangeFilter").addEventListener("click", function()
         cars = sortCategories(currentSortCriteria, cars);
         showCategoriesList();
     }
+
+    function idProduct() {
+        localStorage.setItem('idobject','hola')
+    }
+
+    document.getElementById('sortByCount').addEventListener('click', function(){
+        sortAndShowCategories(ORDER_BY_PROD_COUNT,);
+    })
+
+    /*const createCarCard = (carObject) => {
+    
+    const carCard = document.createElement('div');
+    carCard.setAttribute('id', carObject.id);
+
+    const title = document.createElement('h3');
+    title.append(carObject.name + " - USD " + carObject.cost)
+
+    const description = document.createElement('p');
+    description.append(carObject.description);
+    description.classList.add('description-class');
+
+    const sold = document.createElement('p');
+    sold.append(carObject.soldCount + " vendidos");
+    sold.classList.add('sold-class');
+
+    const image = document.createElement('img');
+    image.src = carObject.image
+    image.classList.add('imagen-class');
+
+    carCard.appendChild(image);
+    carCard.appendChild(title);
+    carCard.appendChild(description);
+    carCard.appendChild(sold);
+
+    return carCard;
+}
+
+/*const populateCarsList = async () => {
+    const carData = await getCarData;
+    console.log(cars)
+if (carData.products) {
+        const carListContainer = document.getElementById('cars-list-container');
+        cars = carData.products;
+        cars.forEach(function(carData) {
+            carListContainer.appendChild(createCarCard(carData));
+        })
+    }
+}
+
+populateCarsList();*/
