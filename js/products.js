@@ -44,7 +44,7 @@ function sortCategories(criteria, array){
     
 }
 
-const createCarCard = (carObject) => {
+/*const createCarCard = (carObject) => {
     
     const carCard = document.createElement('div');
     carCard.setAttribute('id', carObject.id);
@@ -70,33 +70,21 @@ const createCarCard = (carObject) => {
     carCard.appendChild(sold);
 
     return carCard;
-}
+}*/
 
-const populateCarsList = async () => {
+/*const populateCarsList = async () => {
     const carData = await getCarData;
-
+    console.log(cars)
 if (carData.products) {
         const carListContainer = document.getElementById('cars-list-container');
         cars = carData.products;
-        
-        //for(let i = 0; i < currentCategoriesArray.length; i++){
-            //let category = currentCategoriesArray[i];
-
         cars.forEach(function(carData) {
             carListContainer.appendChild(createCarCard(carData));
-            
         })
     }
 }
 
-populateCarsList();
-
-function pepe() {
-    cars = "carData.products"
-}
-
-pepe()
-
+populateCarsList();*/
 
 const populateCatID = async () => {
     const carID = await getCarData;
@@ -107,31 +95,18 @@ const populateCatID = async () => {
 populateCatID();
 
 
-function sortAndShowCategories(sortCriteria, categoriesArray){
-    currentSortCriteria = sortCriteria;
-    console.log(currentSortCriteria)
-    
-    if(categoriesArray != undefined){
-        currentCategoriesArray = categoriesArray;
-    }
-    
-    currentCategoriesArray = sortCategories(currentSortCriteria, currentCategoriesArray);
-    //Muestro las categorías ordenadas
-    populateCarsList();
-}
+
 
 document.getElementById('sortAsc').addEventListener('click', function(){
-    console.log("hola")
     sortAndShowCategories(ORDER_ASC_BY_NAME, cars);
-    console.log('chau')
 })
 
 document.getElementById('sortDesc').addEventListener('click', function(){
-    sortAndShowCategories(ORDER_DESC_BY_NAME);
+    sortAndShowCategories(ORDER_DESC_BY_NAME, cars);
 })
 
 document.getElementById('sortByCount').addEventListener('click', function(){
-    sortAndShowCategories(ORDER_BY_PROD_COUNT);
+    sortAndShowCategories(ORDER_BY_PROD_COUNT,);
 })
 
 document.getElementById("clearRangeFilter").addEventListener("click", function(){
@@ -141,20 +116,8 @@ document.getElementById("clearRangeFilter").addEventListener("click", function()
     minCount = undefined;
     maxCount = undefined;
 
-    populateCarsList();
+    showCategoriesList();
 });
-
-function sortAndShowCategories(sortCriteria, categoriesArray){
-    currentSortCriteria = sortCriteria;
-
-    if(categoriesArray != undefined){
-        currentCategoriesArray = categoriesArray;
-    }
-
-    currentCategoriesArray = sortCategories(currentSortCriteria, currentCategoriesArray);
-
-
-}
 
     document.getElementById("rangeFilterCount").addEventListener("click", function(){
         minCount = document.getElementById("rangeFilterCountMin").value;
@@ -174,6 +137,51 @@ function sortAndShowCategories(sortCriteria, categoriesArray){
         else{
             maxCount = undefined;
         }
-        populateCarsList();
+        showCategoriesList();
     });
 
+    const showCategoriesList = async () => {
+        const carData = await getCarData;
+        console.log(cars)
+            cars = carData.products
+        let htmlContentToAppend = "";
+        for(let i = 0; i < cars.length; i++){
+            let category = cars[i]; 
+    
+            if (((minCount == undefined) || (minCount != undefined && parseInt(category.productCount) >= minCount)) &&
+            ((maxCount == undefined) || (maxCount != undefined && parseInt(category.productCount) <= maxCount))){
+    
+                htmlContentToAppend += `
+                <div onclick="setCatID(${category.id})" class="list-group-item list-group-item-action cursor-active">
+                    <div class="row">
+                        <div class="col-3">
+                            <img src="${category.image}" alt="${category.description}" class="img-thumbnail">
+                        </div>
+                        <div class="col">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h4 class="mb-1">${category.name}</h4>
+                                <small class="text-muted">${category.soldCount} artículos</small>
+                            </div>
+                            <p class="mb-1">${category.description}</p>
+                        </div>
+                    </div>
+                </div>
+                `
+            }
+    
+            document.getElementById("cat-list-container").innerHTML = htmlContentToAppend;
+        }
+    }
+
+    showCategoriesList();
+
+    function sortAndShowCategories(sortCriteria, categoriesArray){
+        currentSortCriteria = sortCriteria;
+        console.log(currentSortCriteria)
+        
+        if(categoriesArray != undefined){
+            cars = categoriesArray;
+        }
+        cars = sortCategories(currentSortCriteria, cars);
+        showCategoriesList();
+    }

@@ -73,14 +73,10 @@ function showCategoriesList(){
 
 function sortAndShowCategories(sortCriteria, categoriesArray){
     currentSortCriteria = sortCriteria;
-    console.log(currentSortCriteria)
-    console.log(currentCategoriesArray)
     if(categoriesArray != undefined){
         currentCategoriesArray = categoriesArray;
     }
-    
     currentCategoriesArray = sortCategories(currentSortCriteria, currentCategoriesArray);
-
     //Muestro las categorías ordenadas
     showCategoriesList();
 }
