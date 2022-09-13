@@ -1,4 +1,4 @@
-const getCarData = fetch('https://japceibal.github.io/emercado-api/cats_products/101.json')
+const getCarData = fetch('https://japceibal.github.io/emercado-api/products/50921.json')
 .then(response => response.json())
 .then(response => (response))
 
@@ -6,7 +6,7 @@ const ORDER_ASC_BY_NAME = "AZ";
 const ORDER_DESC_BY_NAME = "ZA";
 const ORDER_BY_PROD_COUNT = "Cant.";
 let cars = [];
-let currentCategoriesArray = []; //cambiar cars por currentCategoriesArray
+let currentCategoriesArray = [];
 let currentSortCriteria = undefined;
 let minCount = undefined;
 let maxCount = undefined;
@@ -16,26 +16,23 @@ console.log(objeto)
 
     const showCategoriesList = async () => {
         const carData = await getCarData;
-            cars = carData.products
+            cars = carData
         let htmlContentToAppend = "";
-        for(let i = 0; i < cars.length; i++){
-            let category = cars[i]; 
     
-            if (((minCount == undefined) || (minCount != undefined && parseInt(category.productCount) >= minCount)) &&
-            ((maxCount == undefined) || (maxCount != undefined && parseInt(category.productCount) <= maxCount))){
-    
+            if (true){
                 htmlContentToAppend += `
-                <div onclick="setCatID(${category.id})" class="list-group-item list-group-item-action cursor-active">
+                <h2>${cars.name}</h2>
+                <div onclick="setCatID(${cars.id})" class="list-group-item list-group-item-action cursor-active">
                     <div class="row">
                         <div class="col-3">
-                            <img src="${category.image}" alt="${category.description}" class="img-thumbnail">
+                            <img src="${cars.images}" alt="${cars.description}" class="img-thumbnail">
                         </div>
                         <div class="col">
                             <div class="d-flex w-100 justify-content-between">
-                                <h4 class="mb-1">${category.name}</h4>
-                                <small class="text-muted">${category.soldCount} artículos</small>
+                                <h4 class="mb-1">${cars.name}</h4>
+                                <small class="text-muted">${cars.soldCount} artículos</small>
                             </div>
-                            <p class="mb-1">${category.description}</p>
+                            <p class="mb-1">${cars.description}</p>
                         </div>
                     </div>
                 </div>
@@ -44,7 +41,6 @@ console.log(objeto)
     
             document.getElementById("cat-list-container").innerHTML = htmlContentToAppend;
         }
-    }
 
     showCategoriesList();
 

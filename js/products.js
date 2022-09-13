@@ -139,10 +139,6 @@ document.getElementById("clearRangeFilter").addEventListener("click", function()
         showCategoriesList();
     }
 
-    function idProduct() {
-        localStorage.setItem('idobject','hola')
-    }
-
     document.getElementById('sortByCount').addEventListener('click', function(){
         sortAndShowCategories(ORDER_BY_PROD_COUNT,);
     })
