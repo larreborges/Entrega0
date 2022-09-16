@@ -39,7 +39,6 @@ function sortCategories(criteria, array){
             return 0;
         });
     }
-    console.log(result)
     return result;
 }
 
@@ -69,9 +68,11 @@ document.getElementById("clearRangeFilter").addEventListener("click", function()
     showCategoriesList();
 });
 
-    document.getElementById("rangeFilterCount").addEventListener("click", function(){
-        minCount = document.getElementById("rangeFilterCountMin").value;
-        maxCount = document.getElementById("rangeFilterCountMax").value;
+document.getElementById("rangeFilterCount").addEventListener("click", function(){
+    minCount = document.getElementById("rangeFilterCountMin").value;
+    maxCount = document.getElementById("rangeFilterCountMax").value;
+
+    console.log(maxCount)
 
         if ((minCount != undefined) && (minCount != "") && (parseInt(minCount)) >= 0){
             minCount = parseInt(minCount);
@@ -86,13 +87,14 @@ document.getElementById("clearRangeFilter").addEventListener("click", function()
         else{
             maxCount = undefined;
         }
-        showCategoriesList();
-    });
 
-    function setCatID(id) {
-        localStorage.setItem("catID", id);
-        window.location = "product-info.html"
-    }
+        showCategoriesList();
+});
+
+function setCatID(id) {
+    localStorage.setItem("catID", id);
+    window.location = "product-info.html"
+}
 
     const showCategoriesList = async () => {
         const carData = await getCarData;
@@ -101,7 +103,7 @@ document.getElementById("clearRangeFilter").addEventListener("click", function()
         for(let i = 0; i < cars.length; i++){
             let category = cars[i]; 
     
-            if (((minCount == undefined) || (minCount != undefined && parseInt(category.productCount) >= minCount)) &&
+        if (((minCount == undefined) || (minCount != undefined && parseInt(category.productCount) >= minCount)) &&
             ((maxCount == undefined) || (maxCount != undefined && parseInt(category.productCount) <= maxCount))){
     
                 htmlContentToAppend += `
@@ -128,20 +130,16 @@ document.getElementById("clearRangeFilter").addEventListener("click", function()
 
     showCategoriesList()
 
-    function sortAndShowCategories(sortCriteria, categoriesArray){
-        currentSortCriteria = sortCriteria;
-        console.log(currentSortCriteria)
+function sortAndShowCategories(sortCriteria, categoriesArray){
+    currentSortCriteria = sortCriteria;
+    console.log(currentSortCriteria)
         
         if(categoriesArray != undefined){
             cars = categoriesArray;
         }
         cars = sortCategories(currentSortCriteria, cars);
         showCategoriesList();
-    }
-
-    document.getElementById('sortByCount').addEventListener('click', function(){
-        sortAndShowCategories(ORDER_BY_PROD_COUNT,);
-    })
+}
 
     /*const createCarCard = (carObject) => {
     
