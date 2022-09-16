@@ -1,3 +1,6 @@
+let objeto = localStorage.getItem('catID');
+console.log(objeto)
+
 const getCarData = fetch('https://japceibal.github.io/emercado-api/products/50921.json')
 .then(response => response.json())
 .then(response => (response))
@@ -13,8 +16,6 @@ let cars = [];
 let currentSortCriteria = undefined;
 let minCount = undefined;
 let maxCount = undefined;
-let objeto = localStorage.getItem('catID');
-console.log(objeto)
 
     const showCategoriesList = async () => {
         const carData = await getCarData;
@@ -58,6 +59,7 @@ console.log(objeto)
         const commentsData = await getCommentData;
             let comments = commentsData
             let htmlContentToAppend2 = ""; 
+            let htmlContentToAppend3 = "";
 
             if (true) {
                 htmlContentToAppend2 += `
@@ -67,20 +69,25 @@ console.log(objeto)
 
             for(let i=0; i < comments.length; i++)   {         
                 let comments = commentsData[i]
+
                 htmlContentToAppend2 += `
                 
-                    <p><b>${comments.user}</b> ${comments.dateTime} ${comments.score}</p>
+                    <p><b>${comments.user}</b> ${comments.dateTime}</p>`
 
-                    
+                    for (let index = 0; index < comments.score; index++) {
+                        htmlContentToAppend2 += `
+                        <span class="fa fa-star checked"></span>
+                        `
+                    }
 
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
+                    for (let index = comments.score; index < 5; index++) {
+                        htmlContentToAppend2 += `
+                        <span class="fa fa-star"></span>
+                        `
+                    }
 
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-
-                    <p>${comments.description} </p>
+                    htmlContentToAppend2 += `
+                    <p>${comments.description}</p>
                     `
                 }
 
