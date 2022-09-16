@@ -2,47 +2,79 @@ const getCarData = fetch('https://japceibal.github.io/emercado-api/products/5092
 .then(response => response.json())
 .then(response => (response))
 
+const getCommentData = fetch('https://japceibal.github.io/emercado-api/products_comments/50921.json')
+.then(response => response.json())
+.then(response => (response))
+
 const ORDER_ASC_BY_NAME = "AZ";
 const ORDER_DESC_BY_NAME = "ZA";
 const ORDER_BY_PROD_COUNT = "Cant.";
 let cars = [];
-let currentCategoriesArray = [];
 let currentSortCriteria = undefined;
 let minCount = undefined;
 let maxCount = undefined;
 let objeto = localStorage.getItem('catID');
-
 console.log(objeto)
 
     const showCategoriesList = async () => {
         const carData = await getCarData;
             cars = carData
-        let htmlContentToAppend = "";
-    
+            carsImages = cars.images
+            let htmlContentToAppend = "";
+
+            if (true){
+            htmlContentToAppend += `
+            <h2>${cars.name}</h2>
+                    <p><b>Precio</b></p>
+                        <p>${cars.currency} ${cars.cost}</p>
+                    <p><b>Descripción</b></p>
+                        <p>${cars.description} </p>
+                    <p><b>Categoría</b></p>
+                        <p>${cars.category} </p>
+                    <p><b>Cantidad de vendidos</b></p>
+                        <p>${cars.soldCount} </p>
+                    <p><b>Imágenes ilustrativas</b></p>
+            `
+        }
+            for(let i=0; i < carsImages.length; i++){
+                let carImages = carsImages[i]
             if (true){
                 htmlContentToAppend += `
-                <h2>${cars.name}</h2>
-                <div onclick="setCatID(${cars.id})" class="list-group-item list-group-item-action cursor-active">
-                    <div class="row">
-                        <div class="col-3">
-                            <img src="${cars.images}" alt="${cars.description}" class="img-thumbnail">
-                        </div>
-                        <div class="col">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h4 class="mb-1">${cars.name}</h4>
-                                <small class="text-muted">${cars.soldCount} artículos</small>
-                            </div>
-                            <p class="mb-1">${cars.description}</p>
-                        </div>
-                    </div>
-                </div>
-                `
-            }
-    
-            document.getElementById("cat-list-container").innerHTML = htmlContentToAppend;
+                    
+                        <img src="${carImages}">
+                        `
+                    }
+                }    
+                document.getElementById("cat-list-container").innerHTML = htmlContentToAppend;
         }
+            
 
     showCategoriesList();
+
+    const showCategoriesList2 = async () => {
+        const commentsData = await getCommentData;
+            let comments = commentsData
+            let htmlContentToAppend2 = ""; 
+
+            if (true) {
+                htmlContentToAppend2 += `
+                <h3>Comentarios</h3>
+                `
+            }
+
+            for(let i=0; i < comments.length; i++)   {         
+                let comments = commentsData[i]
+                htmlContentToAppend2 += `
+                
+                    <p><b>${comments.user}</b> ${comments.dateTime} ${comments.score}</p>
+                    <p>${comments.description} </p>
+                    `
+                }
+                document.getElementById("chausito").innerHTML = htmlContentToAppend2;
+                
+        }
+            
+    showCategoriesList2();
 
     function sortAndShowCategories(sortCriteria, categoriesArray){
         currentSortCriteria = sortCriteria;
@@ -53,4 +85,7 @@ console.log(objeto)
         }
         cars = sortCategories(currentSortCriteria, cars);
         showCategoriesList();
+        showCategoriesList2();
     }
+
+    
