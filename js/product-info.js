@@ -24,7 +24,8 @@ console.log(objeto)
 
             if (true){
             htmlContentToAppend += `
-            <h2>${cars.name}</h2>
+            <div>
+                <h2>${cars.name}</h2>
                     <p><b>Precio</b></p>
                         <p>${cars.currency} ${cars.cost}</p>
                     <p><b>Descripción</b></p>
@@ -34,14 +35,16 @@ console.log(objeto)
                     <p><b>Cantidad de vendidos</b></p>
                         <p>${cars.soldCount} </p>
                     <p><b>Imágenes ilustrativas</b></p>
+            </div>
             `
         }
             for(let i=0; i < carsImages.length; i++){
                 let carImages = carsImages[i]
             if (true){
                 htmlContentToAppend += `
-                    
-                        <img src="${carImages}">
+                        <div style="float:left;">
+                            <img src="${carImages}" class="img-thumbnail imagen-class2">
+                        </div>
                         `
                     }
                 }    
@@ -67,9 +70,30 @@ console.log(objeto)
                 htmlContentToAppend2 += `
                 
                     <p><b>${comments.user}</b> ${comments.dateTime} ${comments.score}</p>
+
+                    
+
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+
                     <p>${comments.description} </p>
                     `
                 }
+
+                if (true) {
+                    htmlContentToAppend2 += `
+                    <h3>Comentar</h3>
+                    <p>Tu opinion:</p>
+                        <input>
+                    <p>Tu puntuación:</p>
+                    <button>Enviar</button>
+                    `
+                }
+
                 document.getElementById("chausito").innerHTML = htmlContentToAppend2;
                 
         }
@@ -88,4 +112,3 @@ console.log(objeto)
         showCategoriesList2();
     }
 
-    

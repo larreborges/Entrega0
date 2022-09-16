@@ -4,6 +4,12 @@
   float: left;
 }
 
+.imagen-class2 {
+  width: 300px;
+  margin: 20px;
+  display: flex;
+}
+
 .texto-centrado {
   text-align: center;
   margin: 10px;
@@ -18,5 +24,4 @@ display: inline;
 .sold-class {
 margin-bottom: 160px;
 display: inline-block;
-
 }
