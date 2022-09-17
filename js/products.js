@@ -98,7 +98,7 @@ function setCatID(id) {
 
     const showCategoriesList = async () => {
         const carData = await getCarData;
-            cars = carData.products
+            let cars = carData.products
         let htmlContentToAppend = "";
         for(let i = 0; i < cars.length; i++){
             let category = cars[i]; 

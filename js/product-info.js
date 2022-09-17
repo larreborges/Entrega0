@@ -1,11 +1,16 @@
 let objeto = localStorage.getItem('catID');
+let url1 = 'https://japceibal.github.io/emercado-api/products/'
+let url2 = 'https://japceibal.github.io/emercado-api/products_comments/'
+let terminacion = '.json'
+let link1 = url1 + objeto + terminacion
+let link2 = url2 + objeto + terminacion
 console.log(objeto)
 
-const getCarData = fetch('https://japceibal.github.io/emercado-api/products/50921.json')
+const getCarData = fetch(link1)
 .then(response => response.json())
 .then(response => (response))
 
-const getCommentData = fetch('https://japceibal.github.io/emercado-api/products_comments/50921.json')
+const getCommentData = fetch(link2)
 .then(response => response.json())
 .then(response => (response))
 
