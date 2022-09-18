@@ -102,6 +102,7 @@ let maxCount = undefined;
                     <p>Tu opinion:</p>
                         <input>
                     <p>Tu puntuación:</p>
+                    <input type="number" min="0" max="5" />
                     <button>Enviar</button>
                     `
                 }
