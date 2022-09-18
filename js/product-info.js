@@ -4,7 +4,6 @@ let url2 = 'https://japceibal.github.io/emercado-api/products_comments/'
 let terminacion = '.json'
 let link1 = url1 + objeto + terminacion
 let link2 = url2 + objeto + terminacion
-console.log(objeto)
 
 const getCarData = fetch(link1)
 .then(response => response.json())
@@ -14,9 +13,6 @@ const getCommentData = fetch(link2)
 .then(response => response.json())
 .then(response => (response))
 
-const ORDER_ASC_BY_NAME = "AZ";
-const ORDER_DESC_BY_NAME = "ZA";
-const ORDER_BY_PROD_COUNT = "Cant.";
 let cars = [];
 let currentSortCriteria = undefined;
 let minCount = undefined;
@@ -64,7 +60,6 @@ let maxCount = undefined;
         const commentsData = await getCommentData;
             let comments = commentsData
             let htmlContentToAppend2 = ""; 
-            let htmlContentToAppend3 = "";
 
             if (true) {
                 htmlContentToAppend2 += `
@@ -112,16 +107,3 @@ let maxCount = undefined;
         }
             
     showCategoriesList2();
-
-    function sortAndShowCategories(sortCriteria, categoriesArray){
-        currentSortCriteria = sortCriteria;
-        console.log(currentSortCriteria)
-        
-        if(categoriesArray != undefined){
-            cars = categoriesArray;
-        }
-        cars = sortCategories(currentSortCriteria, cars);
-        showCategoriesList();
-        showCategoriesList2();
-    }
-
