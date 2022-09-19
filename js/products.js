@@ -15,9 +15,7 @@ function sortCategories(criteria, array){
     let result = [];
     if (criteria === ORDER_ASC_BY_NAME)
     {
-        result = array.sort(function(a, b)
-        {
-            
+        result = array.sort(function(a, b){
             if ( a.name < b.name ){ return -1; }
             if ( a.name > b.name ){ return 1; }
             return 0;
@@ -72,8 +70,6 @@ document.getElementById("rangeFilterCount").addEventListener("click", function()
     minCount = document.getElementById("rangeFilterCountMin").value;
     maxCount = document.getElementById("rangeFilterCountMax").value;
 
-    console.log(maxCount)
-
         if ((minCount != undefined) && (minCount != "") && (parseInt(minCount)) >= 0){
             minCount = parseInt(minCount);
         }
@@ -103,8 +99,8 @@ function setCatID(id) {
         for(let i = 0; i < cars.length; i++){
             let category = cars[i]; 
     
-        if (((minCount == undefined) || (minCount != undefined && parseInt(category.productCount) >= minCount)) &&
-            ((maxCount == undefined) || (maxCount != undefined && parseInt(category.productCount) <= maxCount))){
+        if (((minCount == undefined) || (minCount != undefined && parseInt(category.cost) >= minCount)) &&
+            ((maxCount == undefined) || (maxCount != undefined && parseInt(category.cost) <= maxCount))){
     
                 htmlContentToAppend += `
                 <div onclick="setCatID(${category.id})" class="list-group-item list-group-item-action cursor-active">
@@ -114,7 +110,7 @@ function setCatID(id) {
                         </div>
                         <div class="col">
                             <div class="d-flex w-100 justify-content-between">
-                                <h4 class="mb-1">${category.name}</h4>
+                                <h4 class="mb-1">${category.name} - UYU ${category.cost}  </h4>
                                 <small class="text-muted">${category.soldCount} artículos</small>
                             </div>
                             <p class="mb-1">${category.description}</p>

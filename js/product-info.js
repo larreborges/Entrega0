@@ -140,8 +140,7 @@ let maxCount = undefined;
         </ul>
       </div>
       `
-
         document.getElementById("userName").innerHTML = dropdown
-
+        localStorage.removeItem('username');
     }
     titular();

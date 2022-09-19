@@ -1,5 +1,4 @@
 let user = document.getElementById("floatingInput").value;
-
 let user2 = JSON.stringify(user)
 
 function verifyPassword() {
@@ -30,12 +29,20 @@ function verifyUsername() {
     return true;
   }
 
-var button = document.getElementById("btn");
+  function onSignIn(googleUser) {
+    var profile = googleUser.getBasicProfile();
+    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+    console.log('Name: ' + profile.getName());
+    console.log('Image URL: ' + profile.getImageUrl());
+    console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+  }
+  
+
+let button = document.getElementById("btn");
 button.addEventListener("click", function(){
   if (verifyUsername() && verifyPassword()){
+    localStorage.setItem('username', user2);
     document.location.href = 'index.html';
   }
 });
-
-localStorage.setItem('username', user2);
 
