@@ -83,7 +83,6 @@ document.getElementById("rangeFilterCount").addEventListener("click", function()
         else{
             maxCount = undefined;
         }
-
         showCategoriesList();
 });
 
@@ -96,6 +95,9 @@ function setCatID(id) {
         const carData = await getCarData;
             let cars = carData.products
         let htmlContentToAppend = "";
+
+
+
         for(let i = 0; i < cars.length; i++){
             let category = cars[i]; 
     
@@ -135,6 +137,22 @@ function sortAndShowCategories(sortCriteria, categoriesArray){
         }
         cars = sortCategories(currentSortCriteria, cars);
         showCategoriesList();
+}
+
+
+let filtro = document.getElementById("buscador")
+
+filtro.addEventListener("keydown" , function(){
+    let filtrar = document.getElementById("buscador").value
+    console.log(filtrar)
+})
+
+function filtrarPorNombre (){
+    
+    if (category.name.includes(filtrar) || category.description.includes(filtrar)) {
+        
+    }
+
 }
 
     /*const createCarCard = (carObject) => {
