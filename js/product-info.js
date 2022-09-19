@@ -22,7 +22,9 @@ let maxCount = undefined;
         const carData = await getCarData;
             cars = carData
             carsImages = cars.images
+            carsRelated = cars.relatedProducts
             let htmlContentToAppend = "";
+            let htmlContentToAppend3 = ""
 
             if (true){
             htmlContentToAppend += `
@@ -37,6 +39,7 @@ let maxCount = undefined;
                     <p><b>Cantidad de vendidos</b></p>
                         <p>${cars.soldCount} </p>
                     <p><b>Imágenes ilustrativas</b></p>
+                    
             </div>
             `
         }
@@ -50,7 +53,21 @@ let maxCount = undefined;
                         `
                     }
                 }    
+
+                for(let i=0; i < carsRelated.length; i++){
+                    let hola = carsRelated[i] 
+                    htmlContentToAppend3 += `
+                    <div>
+                        <img src="${hola.image}" class="img-thumbnail imagen-class2">
+                    </div>
+                    `
+
+
+                }
+
+                
                 document.getElementById("cat-list-container").innerHTML = htmlContentToAppend;
+                document.getElementById("chausote").innerHTML = htmlContentToAppend3;
         }
             
 
@@ -91,7 +108,6 @@ let maxCount = undefined;
                     `
                 }
 
-                if (true) {
                     htmlContentToAppend2 += `
                     <h3>Comentar</h3>
                     <p>Tu opinion:</p>
@@ -99,8 +115,11 @@ let maxCount = undefined;
                     <p>Tu puntuación:</p>
                     <input type="number" min="0" max="5" />
                     <button>Enviar</button>
+                    `   
+
+                    htmlContentToAppend2 += `
+                    <h3>Productos relacionados</h3>
                     `
-                }
 
                 document.getElementById("chausito").innerHTML = htmlContentToAppend2;
                 
