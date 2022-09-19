@@ -13,12 +13,8 @@ document.addEventListener("DOMContentLoaded", function(){
     });
 });
 
-
-
 function titular() {
     var cat = JSON.parse(localStorage.getItem('username'));
-    console.log(cat)
     document.getElementById("userName").innerHTML = cat;
 }
-
 titular();

@@ -39,7 +39,6 @@ let maxCount = undefined;
                     <p><b>Cantidad de vendidos</b></p>
                         <p>${cars.soldCount} </p>
                     <p><b>Imágenes ilustrativas</b></p>
-                    
             </div>
             `
         }
@@ -47,7 +46,7 @@ let maxCount = undefined;
                 let carImages = carsImages[i]
             if (true){
                 htmlContentToAppend += `
-                        <div style="float:left;">
+                        <div>
                             <img src="${carImages}" class="img-thumbnail imagen-class2">
                         </div>
                         `
@@ -57,19 +56,16 @@ let maxCount = undefined;
                 for(let i=0; i < carsRelated.length; i++){
                     let hola = carsRelated[i] 
                     htmlContentToAppend3 += `
-                    <div>
+                    <div onclick="setCatID(${hola.id})" class="list-group-item list-group-item-action cursor-active">
                         <img src="${hola.image}" class="img-thumbnail imagen-class2">
+                        <p>${hola.name}</p>
                     </div>
                     `
-
-
                 }
 
-                
                 document.getElementById("cat-list-container").innerHTML = htmlContentToAppend;
                 document.getElementById("chausote").innerHTML = htmlContentToAppend3;
-        }
-            
+        }   
 
     showCategoriesList();
 
@@ -86,10 +82,9 @@ let maxCount = undefined;
 
             for(let i=0; i < comments.length; i++)   {         
                 let comments = commentsData[i]
-
                 htmlContentToAppend2 += `
-                
-                    <p><b>${comments.user}</b> ${comments.dateTime}</p>`
+                    <p><b>${comments.user}</b> ${comments.dateTime}</p>
+                    `
 
                     for (let index = 0; index < comments.score; index++) {
                         htmlContentToAppend2 += `
@@ -126,3 +121,27 @@ let maxCount = undefined;
         }
             
     showCategoriesList2();
+
+    function setCatID(id) {
+        localStorage.setItem("catID", id);
+        window.location = "product-info.html"
+    }
+
+    function titular() {
+        var cat = JSON.parse(localStorage.getItem('username'));
+        let dropdown = `<div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+          ${cat}
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+          <li><a class="dropdown-item" href="cart.html">Mi carrito</a></li>
+          <li><a class="dropdown-item" href="my-profile.html">Mi perfil</a></li>
+          <li><a class="dropdown-item" href="login.html">Cerrar sesión</a></li>
+        </ul>
+      </div>
+      `
+
+        document.getElementById("userName").innerHTML = dropdown
+
+    }
+    titular();
