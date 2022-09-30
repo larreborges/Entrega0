@@ -96,8 +96,6 @@ function setCatID(id) {
             let cars = carData.products
         let htmlContentToAppend = "";
 
-
-
         for(let i = 0; i < cars.length; i++){
             let category = cars[i]; 
     

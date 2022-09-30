@@ -20,11 +20,12 @@ let maxCount = undefined;
 
     const showCategoriesList = async () => {
         const carData = await getCarData;
-            cars = carData
-            carsImages = cars.images
-            carsRelated = cars.relatedProducts
+            cars = carData;
+            carsImages = cars.images;
+            carsRelated = cars.relatedProducts;
             let htmlContentToAppend = "";
-            let htmlContentToAppend3 = ""
+            let htmlContentToAppend3 = "";
+            let htmlContentToAppend4 = "";
 
             if (true){
             htmlContentToAppend += `
@@ -43,17 +44,16 @@ let maxCount = undefined;
             `
         }
             for(let i=0; i < carsImages.length; i++){
-                let carImages = carsImages[i]
+                let carImage = carsImages[i]
             if (true){
                 htmlContentToAppend += `
-                        <div>
-                            <img src="${carImages}" class="img-thumbnail imagen-class2">
-                        </div>
+                            <img src="${carImage}" class="img-thumbnail imagen-class2">
                         `
                     }
                 }    
 
-                for(let i=0; i < carsRelated.length; i++){
+
+                /*for(let i=0; i < carsRelated.length; i++){
                     let hola = carsRelated[i] 
                     htmlContentToAppend3 += `
                     <div onclick="setCatID(${hola.id})" class="list-group-item list-group-item-action cursor-active">
@@ -61,10 +61,30 @@ let maxCount = undefined;
                         <p>${hola.name}</p>
                     </div>
                     `
+                }*/
+
+                
+                if(true){
+                    let auto1 = carsRelated[0]
+                    htmlContentToAppend4 +=`
+                    <div class="carousel-item active" onclick="setCatID(${auto1.id})">
+                      <img src="${auto1.image}" class="d-block w-100" alt="artículo relacionado 1">
+                    </div>
+                    `
+                }
+
+                for(let i=1; i < carsRelated.length; i++){
+                    let hola = carsRelated[i] 
+                    htmlContentToAppend4 += `
+                    <div class="carousel-item" onclick="setCatID(${hola.id})">
+                      <img src="${hola.image}" class="d-block w-100" alt="artículo relacionado ${i+2}">
+                    </div>
+                    `
                 }
 
                 document.getElementById("cat-list-container").innerHTML = htmlContentToAppend;
                 document.getElementById("chausote").innerHTML = htmlContentToAppend3;
+                document.getElementById("carrusel").innerHTML = htmlContentToAppend4;
         }   
 
     showCategoriesList();
@@ -106,15 +126,14 @@ let maxCount = undefined;
                     htmlContentToAppend2 += `
                     <h3>Comentar</h3>
                     <p>Tu opinion:</p>
-                        <input>
+                    <input type="text">
                     <p>Tu puntuación:</p>
-                    <input type="number" min="0" max="5" />
+                    <input type="number" min="0" max="5"/>
+                    <br><br>
                     <button>Enviar</button>
-                    `   
-
-                    htmlContentToAppend2 += `
+                    <br><br>
                     <h3>Productos relacionados</h3>
-                    `
+                    `   
 
                 document.getElementById("chausito").innerHTML = htmlContentToAppend2;
                 

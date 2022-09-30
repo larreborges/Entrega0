@@ -1,0 +1,8 @@
+#carouselExampleControls {
+    width: 400px;
+}
+
+#cat-list-container {
+    flex-wrap: wrap;
+    display: flex;
+}
