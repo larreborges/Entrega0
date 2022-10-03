@@ -52,7 +52,6 @@ let maxCount = undefined;
                     }
                 }    
 
-
                 /*for(let i=0; i < carsRelated.length; i++){
                     let hola = carsRelated[i] 
                     htmlContentToAppend3 += `
@@ -63,7 +62,6 @@ let maxCount = undefined;
                     `
                 }*/
 
-                
                 if(true){
                     let auto1 = carsRelated[0]
                     htmlContentToAppend4 +=`
@@ -74,10 +72,10 @@ let maxCount = undefined;
                 }
 
                 for(let i=1; i < carsRelated.length; i++){
-                    let hola = carsRelated[i] 
+                    let relacionado = carsRelated[i] 
                     htmlContentToAppend4 += `
-                    <div class="carousel-item" onclick="setCatID(${hola.id})">
-                      <img src="${hola.image}" class="d-block w-100" alt="artículo relacionado ${i+2}">
+                    <div class="carousel-item" onclick="setCatID(${relacionado.id})">
+                      <img src="${relacionado.image}" class="d-block w-100" alt="artículo relacionado ${i+2}">
                     </div>
                     `
                 }
@@ -155,11 +153,14 @@ let maxCount = undefined;
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
           <li><a class="dropdown-item" href="cart.html">Mi carrito</a></li>
           <li><a class="dropdown-item" href="my-profile.html">Mi perfil</a></li>
-          <li><a class="dropdown-item" href="login.html">Cerrar sesión</a></li>
+          <li><a class="dropdown-item" href="login.html" id="cerrarSesion">Cerrar sesión</a></li>
         </ul>
       </div>
       `
         document.getElementById("userName").innerHTML = dropdown
-        localStorage.removeItem('username');
     }
     titular();
+
+document.getElementById("cerrarSesion").addEventListener("click", function() {
+    localStorage.removeItem('username');
+})
