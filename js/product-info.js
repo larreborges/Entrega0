@@ -25,7 +25,6 @@ let maxCount = undefined;
             carsRelated = cars.relatedProducts;
             let htmlContentToAppend = "";
             let htmlContentToAppend3 = "";
-            let htmlContentToAppend4 = "";
 
             if (true){
             htmlContentToAppend += `
@@ -52,19 +51,9 @@ let maxCount = undefined;
                     }
                 }    
 
-                /*for(let i=0; i < carsRelated.length; i++){
-                    let hola = carsRelated[i] 
-                    htmlContentToAppend3 += `
-                    <div onclick="setCatID(${hola.id})" class="list-group-item list-group-item-action cursor-active">
-                        <img src="${hola.image}" class="img-thumbnail imagen-class2">
-                        <p>${hola.name}</p>
-                    </div>
-                    `
-                }*/
-
                 if(true){
                     let auto1 = carsRelated[0]
-                    htmlContentToAppend4 +=`
+                    htmlContentToAppend3 +=`
                     <div class="carousel-item active" onclick="setCatID(${auto1.id})">
                       <img src="${auto1.image}" class="d-block w-100" alt="artículo relacionado 1">
                     </div>
@@ -73,7 +62,7 @@ let maxCount = undefined;
 
                 for(let i=1; i < carsRelated.length; i++){
                     let relacionado = carsRelated[i] 
-                    htmlContentToAppend4 += `
+                    htmlContentToAppend3 += `
                     <div class="carousel-item" onclick="setCatID(${relacionado.id})">
                       <img src="${relacionado.image}" class="d-block w-100" alt="artículo relacionado ${i+2}">
                     </div>
@@ -81,8 +70,7 @@ let maxCount = undefined;
                 }
 
                 document.getElementById("cat-list-container").innerHTML = htmlContentToAppend;
-                document.getElementById("chausote").innerHTML = htmlContentToAppend3;
-                document.getElementById("carrusel").innerHTML = htmlContentToAppend4;
+                document.getElementById("carrusel").innerHTML = htmlContentToAppend3;
         }   
 
     showCategoriesList();
@@ -133,7 +121,7 @@ let maxCount = undefined;
                     <h3>Productos relacionados</h3>
                     `   
 
-                document.getElementById("chausito").innerHTML = htmlContentToAppend2;
+                document.getElementById("comentarios").innerHTML = htmlContentToAppend2;
                 
         }
             
