@@ -36,7 +36,6 @@ function verifyUsername() {
     console.log('Image URL: ' + profile.getImageUrl());
     console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
   }*/
-  
 
 let button = document.getElementById("btn");
 button.addEventListener("click", function(){
