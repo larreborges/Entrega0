@@ -1,6 +1,8 @@
-const getCarData = fetch('https://japceibal.github.io/emercado-api/cats_products/101.json')
-.then(response => response.json())
-.then(response => (response))
+const getCarData = fetch(
+  "https://japceibal.github.io/emercado-api/cats_products/101.json"
+)
+  .then((response) => response.json())
+  .then((response) => response);
 
 const ORDER_ASC_BY_NAME = "AZ";
 const ORDER_DESC_BY_NAME = "ZA";
@@ -11,98 +13,113 @@ let currentSortCriteria = undefined;
 let minCount = undefined;
 let maxCount = undefined;
 
-function sortCategories(criteria, array){
-    let result = [];
-    if (criteria === ORDER_ASC_BY_NAME)
-    {
-        result = array.sort(function(a, b){
-            if ( a.name < b.name ){ return -1; }
-            if ( a.name > b.name ){ return 1; }
-            return 0;
-        });
-        
-    }else if (criteria === ORDER_DESC_BY_NAME){
-        result = array.sort(function(a, b) {
-            if ( a.name > b.name ){ return -1; }
-            if ( a.name < b.name ){ return 1; }
-            return 0;
-        });
-    }else if (criteria === ORDER_BY_PROD_COUNT){
-        result = array.sort(function(a, b) {
-            let aCount = parseInt(a.soldCount);
-            let bCount = parseInt(b.soldCount);
+function sortCategories(criteria, array) {
+  let result = [];
+  if (criteria === ORDER_ASC_BY_NAME) {
+    result = array.sort(function (a, b) {
+      if (a.name < b.name) {
+        return -1;
+      }
+      if (a.name > b.name) {
+        return 1;
+      }
+      return 0;
+    });
+  } else if (criteria === ORDER_DESC_BY_NAME) {
+    result = array.sort(function (a, b) {
+      if (a.name > b.name) {
+        return -1;
+      }
+      if (a.name < b.name) {
+        return 1;
+      }
+      return 0;
+    });
+  } else if (criteria === ORDER_BY_PROD_COUNT) {
+    result = array.sort(function (a, b) {
+      let aCount = parseInt(a.soldCount);
+      let bCount = parseInt(b.soldCount);
 
-            if ( aCount > bCount ){ return -1; }
-            if ( aCount < bCount ){ return 1; }
-            return 0;
-        });
-    }
-    return result;
+      if (aCount > bCount) {
+        return -1;
+      }
+      if (aCount < bCount) {
+        return 1;
+      }
+      return 0;
+    });
+  }
+  return result;
 }
 
 const populateCatID = async () => {
-    const carID = await getCarData;
-    localStorage.setItem('catID', carID.catID);
-}
+  const carID = await getCarData;
+  localStorage.setItem("catID", carID.catID);
+};
 populateCatID();
 
-document.getElementById('sortAsc').addEventListener('click', function(){
-    sortAndShowCategories(ORDER_ASC_BY_NAME, cars);
-})
+document.getElementById("sortAsc").addEventListener("click", function () {
+  sortAndShowCategories(ORDER_ASC_BY_NAME, cars);
+});
 
-document.getElementById('sortDesc').addEventListener('click', function(){
-    sortAndShowCategories(ORDER_DESC_BY_NAME, cars);
-})
+document.getElementById("sortDesc").addEventListener("click", function () {
+  sortAndShowCategories(ORDER_DESC_BY_NAME, cars);
+});
 
-document.getElementById('sortByCount').addEventListener('click', function(){
-    sortAndShowCategories(ORDER_BY_PROD_COUNT, cars);
-})
+document.getElementById("sortByCount").addEventListener("click", function () {
+  sortAndShowCategories(ORDER_BY_PROD_COUNT, cars);
+});
 
-document.getElementById("clearRangeFilter").addEventListener("click", function(){
+document
+  .getElementById("clearRangeFilter")
+  .addEventListener("click", function () {
     document.getElementById("rangeFilterCountMin").value = "";
     document.getElementById("rangeFilterCountMax").value = "";
     minCount = undefined;
     maxCount = undefined;
     showCategoriesList();
-});
+  });
 
-document.getElementById("rangeFilterCount").addEventListener("click", function(){
+document
+  .getElementById("rangeFilterCount")
+  .addEventListener("click", function () {
     minCount = document.getElementById("rangeFilterCountMin").value;
     maxCount = document.getElementById("rangeFilterCountMax").value;
 
-        if ((minCount != undefined) && (minCount != "") && (parseInt(minCount)) >= 0){
-            minCount = parseInt(minCount);
-        }
-        else{
-            minCount = undefined;
-        }
+    if (minCount != undefined && minCount != "" && parseInt(minCount) >= 0) {
+      minCount = parseInt(minCount);
+    } else {
+      minCount = undefined;
+    }
 
-        if ((maxCount != undefined) && (maxCount != "") && (parseInt(maxCount)) >= 0){
-            maxCount = parseInt(maxCount);
-        }
-        else{
-            maxCount = undefined;
-        }
-        showCategoriesList();
-});
+    if (maxCount != undefined && maxCount != "" && parseInt(maxCount) >= 0) {
+      maxCount = parseInt(maxCount);
+    } else {
+      maxCount = undefined;
+    }
+    showCategoriesList();
+  });
 
 function setCatID(id) {
-    localStorage.setItem("catID", id);
-    window.location = "product-info.html"
+  localStorage.setItem("catID", id);
+  window.location = "product-info.html";
 }
 
-    const showCategoriesList = async () => {
-        const carData = await getCarData;
-            let cars = carData.products
-        let htmlContentToAppend = "";
+const showCategoriesList = async () => {
+  const carData = await getCarData;
+  let cars = carData.products;
+  let htmlContentToAppend = "";
 
-        for(let i = 0; i < cars.length; i++){
-            let category = cars[i]; 
-    
-        if (((minCount == undefined) || (minCount != undefined && parseInt(category.cost) >= minCount)) &&
-            ((maxCount == undefined) || (maxCount != undefined && parseInt(category.cost) <= maxCount))){
-    
-                htmlContentToAppend += `
+  for (let i = 0; i < cars.length; i++) {
+    let category = cars[i];
+
+    if (
+      (minCount == undefined ||
+        (minCount != undefined && parseInt(category.cost) >= minCount)) &&
+      (maxCount == undefined ||
+        (maxCount != undefined && parseInt(category.cost) <= maxCount))
+    ) {
+      htmlContentToAppend += `
                 <div onclick="setCatID(${category.id})" class="list-group-item list-group-item-action cursor-active">
                     <div class="row">
                         <div class="col-3">
@@ -117,43 +134,43 @@ function setCatID(id) {
                         </div>
                     </div>
                 </div>
-                `
-            }
-    
-            document.getElementById("cat-list-container").innerHTML = htmlContentToAppend;
-        }
+                `;
     }
 
-    showCategoriesList()
+    document.getElementById("cat-list-container").innerHTML =
+      htmlContentToAppend;
+  }
+};
 
-function sortAndShowCategories(sortCriteria, categoriesArray){
-    currentSortCriteria = sortCriteria;
-    console.log(currentSortCriteria)
-        
-        if(categoriesArray != undefined){
-            cars = categoriesArray;
-        }
-        cars = sortCategories(currentSortCriteria, cars);
-        showCategoriesList();
+showCategoriesList();
+
+function sortAndShowCategories(sortCriteria, categoriesArray) {
+  currentSortCriteria = sortCriteria;
+  console.log(currentSortCriteria);
+
+  if (categoriesArray != undefined) {
+    cars = categoriesArray;
+  }
+  cars = sortCategories(currentSortCriteria, cars);
+  showCategoriesList();
 }
 
+let filtro = document.getElementById("buscador");
 
-let filtro = document.getElementById("buscador")
+filtro.addEventListener("keydown", function () {
+  let filtrar = document.getElementById("buscador").value;
+  console.log(filtrar);
+});
 
-filtro.addEventListener("keydown" , function(){
-    let filtrar = document.getElementById("buscador").value
-    console.log(filtrar)
-})
-
-function filtrarPorNombre (){
-    
-    if (category.name.includes(filtrar) || category.description.includes(filtrar)) {
-        
-    }
-
+function filtrarPorNombre() {
+  if (
+    category.name.includes(filtrar) ||
+    category.description.includes(filtrar)
+  ) {
+  }
 }
 
-    /*const createCarCard = (carObject) => {
+/*const createCarCard = (carObject) => {
     
     const carCard = document.createElement('div');
     carCard.setAttribute('id', carObject.id);

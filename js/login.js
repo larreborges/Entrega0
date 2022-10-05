@@ -1,5 +1,5 @@
 let user = document.getElementById("floatingInput").value;
-let user2 = JSON.stringify(user)
+let user2 = JSON.stringify(user);
 
 function verifyPassword() {
   const pw = document.getElementById("floatingPassword").value;
@@ -25,11 +25,11 @@ function verifyUsername() {
   if (un == "") {
     alert("Por favor, complete el email");
     return false;
-  } 
-    return true;
   }
+  return true;
+}
 
-  /*function onSignIn(googleUser) {
+/*function onSignIn(googleUser) {
     var profile = googleUser.getBasicProfile();
     console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
     console.log('Name: ' + profile.getName());
@@ -38,10 +38,9 @@ function verifyUsername() {
   }*/
 
 let button = document.getElementById("btn");
-button.addEventListener("click", function(){
-  if (verifyUsername() && verifyPassword()){
-    localStorage.setItem('username', user2);
-    document.location.href = 'index.html';
+button.addEventListener("click", function () {
+  if (verifyUsername() && verifyPassword()) {
+    localStorage.setItem("username", user2);
+    document.location.href = "index.html";
   }
 });
-
