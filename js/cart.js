@@ -2,6 +2,8 @@ const getUserData = fetch('https://japceibal.github.io/emercado-api/user_cart/25
 .then(response => response.json())
 .then(response => (response))
 
+let cantidadActualizada = "";
+
 const showUserData = async () => {
     const userData = await getUserData;
     let articulos = userData.articles[0]
@@ -31,6 +33,7 @@ const showUserData = async () => {
             <li><b>Subtotal</b></li>
           </div>
         </div>
+        <hr/>
         <div class="row">
           <div class="col">
             <img src="${imagen}" width="100">
@@ -42,13 +45,16 @@ const showUserData = async () => {
             <li>${moneda+costo}</li>
           </div>
           <div class="col">
-            <input type="text" value="${cantidad}" id="ammountValue">
+            <input type="text" value="${cantidad}" id="ammountValue" onkeyup="actualizarPrecio()">
           </div>
           <div class="col">
-            <li>${moneda+cantidad*costo}</li>
+            <li><b>${moneda+cantidadActualizada*costo}</b></li>
           </div>
         </div>
       </div>
+
+      <hr/>
+      <hr/>
 
       <h4>Tipo de envío</h4>
         <input type="radio" id="html" name="fav_language" value="HTML">
@@ -57,6 +63,8 @@ const showUserData = async () => {
           <label for="css">Express 5 a 8 días (7%)</label><br>
         <input type="radio" id="javascript" name="fav_language" value="JavaScript">
           <label for="javascript">Standard 12 a 15 días (5%)</label>
+          <br>
+          <br>
 
       <h4>Dirección de envio</h4>
         <div class="row">
@@ -85,14 +93,21 @@ const showUserData = async () => {
             <input type="text">
           </div>
         </div>
+
+        <script>
+        
+        </script>
+        
     `
     document.getElementById("articulos").innerHTML =
       htmlContentToAppend;
 
-
-    document.getElementById("ammountValue").addEventListener("click", function(){
-      
-    })
 }
 
 showUserData();
+
+function actualizarPrecio(){
+      let cantidadActualizada = document.getElementById("ammountValue").value
+      console.log("Hola")
+      console.log(cantidadActualizada)
+}
