@@ -1,19 +1,20 @@
-const getUserData = fetch('https://japceibal.github.io/emercado-api/user_cart/25801.json')
-.then(response => response.json())
-.then(response => (response))
+const getUserData = fetch(
+  "https://japceibal.github.io/emercado-api/user_cart/25801.json"
+)
+  .then((response) => response.json())
+  .then((response) => response);
 
-let cantidadActualizada = "";
+let userData;
 
-const showUserData = async () => {
-    const userData = await getUserData;
-    let articulos = userData.articles[0]
-    let nombre = articulos.name;
-    let costo = articulos.unitCost;
-    let cantidad = articulos.count;
-    let moneda = articulos.currency;
-    let imagen = articulos.image;
+function renderizarCarrito() {
+  if (!userData) return;
+  const { name, unitCost, count, currency, image } = userData.articles[0];
+  let valueInDollars = count * unitCost;
+  valueInDollars =
+    currency +
+    valueInDollars.toLocaleString("en-US", { minimumFractionDigits: 2 });
 
-    let htmlContentToAppend = `
+  let htmlContentToAppend = `
     
     <h4>Artículos a comprar</h4>
       <div class="container">
@@ -36,19 +37,19 @@ const showUserData = async () => {
         <hr/>
         <div class="row">
           <div class="col">
-            <img src="${imagen}" width="100">
+            <img src="${image}" width="100">
           </div>
           <div class="col">
-            <li>${nombre}</li>
+            <li>${name}</li>
           </div>
           <div class="col">
-            <li>${moneda+costo}</li>
+            <li>${currency + unitCost}</li>
           </div>
           <div class="col">
-            <input type="text" value="${cantidad}" id="ammountValue" onkeyup="actualizarPrecio()">
+            <input type="text" value="${count}" id="ammountValue" onkeyup="actualizarPrecio()">
           </div>
           <div class="col">
-            <li><b>${moneda+cantidadActualizada*costo}</b></li>
+            <li><b>${valueInDollars}</b></li>
           </div>
         </div>
       </div>
@@ -93,21 +94,26 @@ const showUserData = async () => {
             <input type="text">
           </div>
         </div>
-
-        <script>
         
-        </script>
-        
-    `
-    document.getElementById("articulos").innerHTML =
-      htmlContentToAppend;
-
+    `;
+  document.getElementById("articulos").innerHTML = htmlContentToAppend;
 }
+
+const showUserData = async () => {
+  userData = await getUserData; // destructuring de objeto y de array
+  renderizarCarrito();
+};
 
 showUserData();
 
-function actualizarPrecio(){
-      let cantidadActualizada = document.getElementById("ammountValue").value
-      console.log("Hola")
-      console.log(cantidadActualizada)
+function actualizarPrecio() {
+  const currentValue = document.getElementById("ammountValue").value;
+  userData.articles[0].count = currentValue;
+
+  console.log("Hola");
+  renderizarCarrito();
+  document
+    .getElementById("ammountValue")
+    .setSelectionRange(currentValue.length, currentValue.length)
+    .focus();
 }
