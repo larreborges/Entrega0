@@ -23,16 +23,16 @@ function renderizarCarrito() {
             
           </div>
           <div class="col">
-            <li><b>Nombre</b></li>
+            <p><b>Nombre</b></p>
           </div>
           <div class="col">
-            <li><b>Costo</b></li>
+            <p><b>Costo</b></p>
           </div>
           <div class="col">
-            <li><b>Cantidad</b></li>
+            <p><b>Cantidad</b></p>
           </div>
           <div class="col">
-            <li><b>Subtotal</b></li>
+            <p><b>Subtotal</b></p>
           </div>
         </div>
 
@@ -43,16 +43,16 @@ function renderizarCarrito() {
             <img src="${image}" width="100">
           </div>
           <div class="col">
-            <li>${name}</li>
+            <p>${name}</p>
           </div>
           <div class="col">
-            <li>${currency + unitCost}</li>
+            <p>${currency + unitCost}</p>
           </div>
           <div class="col">
             <input type="text" value="${count}" id="ammountValue" onkeyup="actualizarPrecio()">
           </div>
           <div class="col">
-            <li><b>${valueInDollars}</b></li>
+            <p><b>${valueInDollars}</b></p>
           </div>
         </div>
       </div>
@@ -61,11 +61,11 @@ function renderizarCarrito() {
       <hr/>
 
       <h4>Tipo de envío</h4>
-        <input type="radio" id="envioPremium" name="tipo_de_envio" value="envioPremium">
+        <input type="radio" id="envioPremium" name="tipo_de_envio" value="envioPremium" onclick="actualizarPrecioEnvio()">
           <label for="envioPremium">Premium 2 a 5 días (15%)</label><br>
-        <input type="radio" id="envioExpress" name="tipo_de_envio" value="envioExpress">
+        <input type="radio" id="envioExpress" name="tipo_de_envio" value="envioExpress" onclick="actualizarPrecioEnvio()">
           <label for="envioExpress">Express 5 a 8 días (7%)</label><br>
-        <input type="radio" id="envioStandard" name="tipo_de_envio" value="envioStandard">
+        <input type="radio" id="envioStandard" name="tipo_de_envio" value="envioStandard" onclick="actualizarPrecioEnvio()">
           <label for="envioStandard">Standard 12 a 15 días (5%)</label>
         <br>
         <br>
@@ -101,7 +101,7 @@ function renderizarCarrito() {
         <hr/>
 
         <h4>Costos</h4>
-          <div class="row">
+          <div class="row border">
             <div class="col">
               <p>Subtotal</p>
               <p><small>Costo unitario del producto por cantidad</small></p>
@@ -109,7 +109,8 @@ function renderizarCarrito() {
             <div class="col">
               <p>${valueInDollars}</p>
             </div>
-          <div class="row">
+          </div>
+          <div class="row border">
             <div class="col">
               <p>Costo de envio</p>
               <p><small>Según el tipo de envio</small></p>
@@ -117,18 +118,25 @@ function renderizarCarrito() {
             <div class="col">
               <p>$$$</p>
             </div>
-          </div class="row">
-            <div>
+          </div>
+          <div class="row border">
+            <div class="col">
               <p>Total ($)</p>
+            </div>
+            <div class="col">
               <p>agregar precio total</p>
             </div>
           </div>
+          <br>
         <hr/>
 
         <h4>Forma de Pago</h4>
-          <p>No se ha seleccionado </p> <a>Seleccionar</a>
-
+          <p>No se ha seleccionado </p> 
+          <button type="button" class="btn btn-link ps-0" data-bs-toggle="modal"
+            data-bs-target="#modalTerminos">Seleccionar</button>
         </div>
+
+        <button type="button" class="btn btn-primary">Cerrar</button> 
     `;
   document.getElementById("articulos").innerHTML = htmlContentToAppend;
 }
@@ -152,9 +160,19 @@ function actualizarPrecio() {
 }
 
 function actualizarPrecioEnvio() {
-  if (condition) {
-    
+  const value = userData.articles[0].unitCost
+  let precioDeEnvio = "";
+  if (document.getElementById("envioPremium").checked == true) {
+    precioDeEnvio = value*0,15
+  } else if (document.getElementById("envioExpress").checked == true) {
+    precioDeEnvio = value*0,07
+  } else if (document.getElementById("envioStandard").checked == true) {
+    precioDeEnvio = value*0,05
+  } else {
+    precioDeEnvio = 0
   }
 
-  renderizarCarrito();
+return(precioDeEnvio)
 }
+
+actualizarPrecioEnvio();
