@@ -5,6 +5,7 @@ const getUserData = fetch(
   .then((response) => response);
 
 let userData;
+let precioDeEnvio = 0;
 
 function renderizarCarrito() {
   if (!userData) return;
@@ -52,7 +53,7 @@ function renderizarCarrito() {
             <input type="text" value="${count}" id="ammountValue" onkeyup="actualizarPrecio()">
           </div>
           <div class="col">
-            <p><b>${valueInDollars}</b></p>
+            <p id="contenedorDePrecio"><b>${valueInDollars}</b></p>
           </div>
         </div>
       </div>
@@ -67,8 +68,8 @@ function renderizarCarrito() {
           <label for="envioExpress">Express 5 a 8 días (7%)</label><br>
         <input type="radio" id="envioStandard" name="tipo_de_envio" value="envioStandard" onclick="actualizarPrecioEnvio()">
           <label for="envioStandard">Standard 12 a 15 días (5%)</label>
-        <br>
-        <br>
+      <br>
+      <br>
 
       <h4>Dirección de envio</h4>
         <div class="row">
@@ -100,43 +101,43 @@ function renderizarCarrito() {
 
         <hr/>
 
-        <h4>Costos</h4>
-          <div class="row border">
-            <div class="col">
-              <p>Subtotal</p>
-              <p><small>Costo unitario del producto por cantidad</small></p>
-            </div>
-            <div class="col">
-              <p>${valueInDollars}</p>
-            </div>
+      <h4>Costos</h4>
+        <div class="row border">
+          <div class="col">
+            <p>Subtotal</p>
+            <p><small>Costo unitario del producto por cantidad</small></p>
           </div>
-          <div class="row border">
-            <div class="col">
-              <p>Costo de envio</p>
-              <p><small>Según el tipo de envio</small></p>
-            </div>
-            <div class="col">
-              <p>$$$</p>
-            </div>
+          <div class="col">
+            <p>${valueInDollars}</p>
           </div>
-          <div class="row border">
-            <div class="col">
-              <p>Total ($)</p>
-            </div>
-            <div class="col">
-              <p>agregar precio total</p>
-            </div>
-          </div>
-          <br>
-        <hr/>
-
-        <h4>Forma de Pago</h4>
-          <p>No se ha seleccionado </p> 
-          <button type="button" class="btn btn-link ps-0" data-bs-toggle="modal"
-            data-bs-target="#modalTerminos">Seleccionar</button>
         </div>
+        <div class="row border">
+          <div class="col">
+            <p>Costo de envio</p>
+            <p><small>Según el tipo de envio</small></p>
+          </div>
+          <div class="col">
+            <p id="valorDeEnvio">${precioDeEnvio}</p>
+            </div>
+        </div>
+        <div class="row border">
+          <div class="col">
+             <p>Total ($)</p>
+          </div>
+          <div class="col">
+            <p>agregar precio total</p>
+          </div>
+        </div>
+        <br>
+      <hr/>
 
-        <button type="button" class="btn btn-primary">Cerrar</button> 
+      <h4>Forma de Pago</h4>
+        <p>No se ha seleccionado </p> 
+        <button type="button" class="btn btn-link ps-0" data-bs-toggle="modal"
+          data-bs-target="#modalTerminos">Seleccionar</button>
+      </div>
+
+      <button type="button" class="btn btn-primary">Finalizar compra</button> 
     `;
   document.getElementById("articulos").innerHTML = htmlContentToAppend;
 }
@@ -151,28 +152,27 @@ showUserData();
 function actualizarPrecio() {
   const currentValue = document.getElementById("ammountValue").value;
   userData.articles[0].count = currentValue;
-
   renderizarCarrito();
-  document
-    .getElementById("ammountValue")
-    .setSelectionRange(currentValue.length, currentValue.length)
-    .focus();
+  
+  document.getElementById("ammountValue").focus();
+  document.getElementById("ammountValue").setSelectionRange(currentValue.length, currentValue.length);
 }
 
 function actualizarPrecioEnvio() {
-  const value = userData.articles[0].unitCost
-  let precioDeEnvio = "";
+  const currentValue = document.getElementById("ammountValue").value;
+  const contenedorDePrecio = document.getElementById("contenedorDePrecio").value
+  
   if (document.getElementById("envioPremium").checked == true) {
-    precioDeEnvio = value*0,15
+    precioDeEnvio += 0,15
+    console.log("Chau")
+    console.log(precioDeEnvio)
   } else if (document.getElementById("envioExpress").checked == true) {
-    precioDeEnvio = value*0,07
+    precioDeEnvio = currentValue*0,07
   } else if (document.getElementById("envioStandard").checked == true) {
-    precioDeEnvio = value*0,05
+    precioDeEnvio = currentValue*0,05*contenedorDePrecio
   } else {
     precioDeEnvio = 0
   }
 
-return(precioDeEnvio)
 }
 
-actualizarPrecioEnvio();
