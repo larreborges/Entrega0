@@ -6,12 +6,11 @@ const getUserData = fetch(
 
 let userData;
 let precioDeEnvio = 0;
-
-`
-
-`
+let precioTotal = 0;
+let informacionDeEnvio = localStorage.getItem('envio')
 
 function renderizarCarrito() {
+  
   if (!userData) return;
   const { name, unitCost, count, currency, image } = userData.articles[0];
   let valueInDollars = count * unitCost;
@@ -20,6 +19,7 @@ function renderizarCarrito() {
     valueInDollars.toLocaleString("en-US", { minimumFractionDigits: 2 });
 
   let htmlContentToAppend = `
+  <form class="row g-3 needs-validation" novalidate action="#">
     <div class="scroller">
     <h4>Artículos a comprar</h4>
       <div class="container">
@@ -66,16 +66,15 @@ function renderizarCarrito() {
       <hr/>
 
       <h4>Tipo de envío</h4>
-        <input type="radio" id="envioPremium" name="tipo_de_envio" value="envioPremium" onclick="actualizarPrecioEnvio()">
+        <input type="radio" id="envioPremium" name="tipo_de_envio" value="envioPremium" onclick="localStorageData(), actualizarPrecioEnvio(), marcarEnvio()" required>
           <label for="envioPremium">Premium 2 a 5 días (15%)</label><br>
-        <input type="radio" id="envioExpress" name="tipo_de_envio" value="envioExpress" onclick="actualizarPrecioEnvio()">
+        <input type="radio" id="envioExpress" name="tipo_de_envio" value="envioExpress" onclick="localStorageData(), actualizarPrecioEnvio(), marcarEnvio()" required>
           <label for="envioExpress">Express 5 a 8 días (7%)</label><br>
-        <input type="radio" id="envioStandard" name="tipo_de_envio" value="envioStandard" onclick="actualizarPrecioEnvio()">
+        <input type="radio" id="envioStandard" name="tipo_de_envio" value="envioStandard" onclick="localStorageData(), actualizarPrecioEnvio(), marcarEnvio()" required>
           <label for="envioStandard">Standard 12 a 15 días (5%)</label>
       <br>
       <br>
 
-      <form class="row g-3 needs-validation" novalidate>
       <h4>Dirección de envio</h4>
         <div class="row">
           <div class="col">
@@ -88,9 +87,7 @@ function renderizarCarrito() {
         <div class="row">
           <div class="col-6">
             <input type="text" class="form-control" id="validationCustom01" required>
-            <div class="invalid-feedback">
-              Ingresa una calle
-            </div>
+            <div class="invalid-feedback">Ingresa una calle</div>
           </div>
           <div class="col-3">
             <input type="text" class="form-control" id="validationCustom02" required>
@@ -106,13 +103,13 @@ function renderizarCarrito() {
         </div>
         <div class="row">
           <div class="col-6">
-            <input type="text" class="form-control" id="validationCustom03" required>
+            <label for="numero" class="form-label">Esquina</label>
+            <input type="text" class="form-control" id="numero" required>
             <div class="invalid-feedback">
               Ingresa un número
             </div>
           </div>
         </div>
-      </form>
 
         <hr/>
 
@@ -140,21 +137,23 @@ function renderizarCarrito() {
              <p>Total ($)</p>
           </div>
           <div class="col">
-            <p>agregar precio total</p>
+            <p>${precioTotal}</p>
           </div>
         </div>
         <br>
       <hr/>
 
       <h4>Forma de Pago</h4>
-        <p>No se ha seleccionado </p> 
+        <p>No se ha seleccionado</p> 
         <button type="button" class="btn btn-link ps-0" data-bs-toggle="modal"
           data-bs-target="#modalTerminos">Seleccionar</button>
       </div>
 
-      <button type="submit" class="btn btn-primary" id="finalizarCompra" onclick="verifyAll()">Finalizar compra</button> 
+      <button type="submit" class="btn btn-primary" id="finalizarCompra">Finalizar compra</button> 
+      </form>
     
       `;
+
   document.getElementById("articulos").innerHTML = htmlContentToAppend;
 }
 
@@ -162,6 +161,7 @@ const showUserData = async () => {
   userData = await getUserData;
   renderizarCarrito();
   actualizarPrecioEnvio();
+  marcarEnvio();
 };
 
 showUserData();
@@ -170,6 +170,8 @@ function actualizarPrecio() {
   const currentValue = document.getElementById("ammountValue").value;
   userData.articles[0].count = currentValue;
   renderizarCarrito();
+  actualizarPrecioEnvio();
+  marcarEnvio();
   
   document.getElementById("ammountValue").focus();
   document.getElementById("ammountValue").setSelectionRange(currentValue.length, currentValue.length);
@@ -188,9 +190,33 @@ function actualizarPrecioEnvio() {
   } else {
     precioDeEnvio = 0
   }
+  console.log(precioDeEnvio)
+  precioTotal = precioDeEnvio + currentValue*currentCount
+  renderizarCarrito();
+  marcarEnvio();
 }
 
-function verifyAll() {
-  console.log("hola")
+function localStorageData() {
+  const envioExpress = document.getElementById("envioExpress")
+  const envioPremium = document.getElementById("envioPremium")
+  const envioStandard = document.getElementById("envioStandard")
+
+  if (envioExpress.checked) {
+    localStorage.setItem('envio','express')
+  } else if (envioPremium.checked) {
+    localStorage.setItem('envio','premium')
+  } else if (envioStandard.checked) {
+    localStorage.setItem('envio','standard')
+  }
 }
 
+
+function marcarEnvio() {
+  if (informacionDeEnvio == 'premium') {
+    document.getElementById("envioPremium").checked = true;
+  } else if (informacionDeEnvio == 'express') {
+    document.getElementById("envioExpress").checked = true;
+  } else if (informacionDeEnvio == 'standard') {
+    document.getElementById("envioStandard").checked = true;
+  }
+}

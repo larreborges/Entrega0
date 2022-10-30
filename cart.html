@@ -64,42 +64,43 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <input type="radio" id="tarjetaDeCredito" name="tipo_de_pago" value="tarjetaDeCredito">
+          <input type="radio" id="tarjetaDeCredito" name="tipo_de_pago" value="tarjetaDeCredito" required>
           <label for="tarjetaDeCredito">Tarjeta de Crédito</label>
           <hr/>
           <div class="row">
             <div class="col">
               <p>Número de Tarjeta</p>
-              <input type="text" id="cardNumber">
+              <input type="number" id="cardNumber" class="form-control">
             </div>
             <div class="col">
               <p>Código de seg.</p>
-              <input type="text" id="securityCode">
+              <input type="number" id="securityCode" class="form-control">
             </div>
           </div>
           <div class="row">
             <div class="col">
-            <p>Vencimiento (MM/AA)</p>
-            <input type="text" id="cardNumber">
+              <p>Vencimiento (MM/AA)</p>
+              <input type="text" id="cardVto" class="form-control">
+            </div>
           </div>
-          </div>
-          <input type="radio" id="transferenciaBancaria" name="tipo_de_pago" value="transferenciaBancaria">
-          <label for="transferenciaBancaria">Transferencia Bancaria</label>
+            <input type="radio" id="transferenciaBancaria" name="tipo_de_pago" value="transferenciaBancaria" required>
+            <label for="transferenciaBancaria">Transferencia Bancaria</label>
           <hr/>
           <div class="row">
             <div class="col">
               <p>Número de Cuenta</p>
-              <input type="text" id="accountNumber">
+              <input type="text" id="accountNumber" class="form-control">
             </div>
           </div>
         </div>
         <div class="modal-footer">
-          <div class="form-check">
-            <button type="button" class="btn btn-primary">Cerrar</button> 
+          <div>
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close">Cerrar</button> 
           </div>
         </div>
       </div>
     </div>
+    
   </div>
 
   <div id="spinner-wrapper">
