@@ -1,3 +1,4 @@
+//Funcion que consigue los datos de una pagina externa
 const getCarData = fetch(
   "https://japceibal.github.io/emercado-api/cats_products/101.json"
 )
@@ -169,6 +170,8 @@ function filtrarPorNombre() {
   ) {
   }
 }
+
+//Otra forma de hacer la funcion
 
 /*const createCarCard = (carObject) => {
     

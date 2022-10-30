@@ -116,16 +116,18 @@ const showCategoriesList2 = async () => {
   }
 
   htmlContentToAppend2 += `
-                    <h3>Comentar</h3>
-                    <p>Tu opinion:</p>
-                    <input type="text">
-                    <p>Tu puntuación:</p>
-                    <input type="number" min="0" max="5"/>
-                    <br><br>
-                    <button>Enviar</button>
-                    <br><br>
-                    <h3>Productos relacionados</h3>
-                    `;
+      <h3>Comentar</h3>
+        <p>Tu opinion:</p>
+          <input type="text">
+        <p>Tu puntuación:</p>
+          <input type="number" min="0" max="5"/>
+          <br>
+          <br>
+        <button>Enviar</button>
+        <br>
+        <br>
+      <h3>Productos relacionados</h3>
+      `;
 
   document.getElementById("comentarios").innerHTML = htmlContentToAppend2;
 };

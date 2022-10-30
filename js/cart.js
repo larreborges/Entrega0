@@ -7,6 +7,10 @@ const getUserData = fetch(
 let userData;
 let precioDeEnvio = 0;
 
+`
+
+`
+
 function renderizarCarrito() {
   if (!userData) return;
   const { name, unitCost, count, currency, image } = userData.articles[0];
@@ -47,13 +51,13 @@ function renderizarCarrito() {
             <p>${name}</p>
           </div>
           <div class="col">
-            <p>${currency + unitCost}</p>
+            <p id="contenedorDePrecio">${unitCost}</p>
           </div>
           <div class="col">
-            <input type="text" value="${count}" id="ammountValue" onkeyup="actualizarPrecio()">
+            <input type="text" value="${count}" class="form-control" id="ammountValue" onkeyup="actualizarPrecio()">
           </div>
           <div class="col">
-            <p id="contenedorDePrecio"><b>${valueInDollars}</b></p>
+            <p><b>${valueInDollars}</b></p>
           </div>
         </div>
       </div>
@@ -71,21 +75,28 @@ function renderizarCarrito() {
       <br>
       <br>
 
+      <form class="row g-3 needs-validation" novalidate>
       <h4>Dirección de envio</h4>
         <div class="row">
           <div class="col">
             <p>Calle</p>
           </div>
           <div class="col">
-            <p>Dirección</p>
+            <p>Número</p>
           </div>
         </div>
         <div class="row">
-          <div class="col">
-            <input type="text">
+          <div class="col-6">
+            <input type="text" class="form-control" id="validationCustom01" required>
+            <div class="invalid-feedback">
+              Ingresa una calle
+            </div>
           </div>
-          <div class="col">
-            <input type="text">
+          <div class="col-3">
+            <input type="text" class="form-control" id="validationCustom02" required>
+              <div class="invalid-feedback">
+                Ingresa una esquina
+              </div>
           </div>
         </div>
         <div class="row">
@@ -94,10 +105,14 @@ function renderizarCarrito() {
           </div>
         </div>
         <div class="row">
-          <div class="col">
-            <input type="text">
+          <div class="col-6">
+            <input type="text" class="form-control" id="validationCustom03" required>
+            <div class="invalid-feedback">
+              Ingresa un número
+            </div>
           </div>
         </div>
+      </form>
 
         <hr/>
 
@@ -137,14 +152,16 @@ function renderizarCarrito() {
           data-bs-target="#modalTerminos">Seleccionar</button>
       </div>
 
-      <button type="button" class="btn btn-primary">Finalizar compra</button> 
-    `;
+      <button type="submit" class="btn btn-primary" id="finalizarCompra" onclick="verifyAll()">Finalizar compra</button> 
+    
+      `;
   document.getElementById("articulos").innerHTML = htmlContentToAppend;
 }
 
 const showUserData = async () => {
-  userData = await getUserData; // destructuring de objeto y de array
+  userData = await getUserData;
   renderizarCarrito();
+  actualizarPrecioEnvio();
 };
 
 showUserData();
@@ -159,20 +176,21 @@ function actualizarPrecio() {
 }
 
 function actualizarPrecioEnvio() {
-  const currentValue = document.getElementById("ammountValue").value;
-  const contenedorDePrecio = document.getElementById("contenedorDePrecio").value
+  const currentValue = userData.articles[0].unitCost
+  const currentCount = userData.articles[0].count
   
   if (document.getElementById("envioPremium").checked == true) {
-    precioDeEnvio += 0,15
-    console.log("Chau")
-    console.log(precioDeEnvio)
+    precioDeEnvio = currentCount*0.15*currentValue
   } else if (document.getElementById("envioExpress").checked == true) {
-    precioDeEnvio = currentValue*0,07
+    precioDeEnvio = currentCount*0.07*currentValue
   } else if (document.getElementById("envioStandard").checked == true) {
-    precioDeEnvio = currentValue*0,05*contenedorDePrecio
+    precioDeEnvio = currentCount*0.05*currentValue
   } else {
     precioDeEnvio = 0
   }
+}
 
+function verifyAll() {
+  console.log("hola")
 }
 
