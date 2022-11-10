@@ -220,3 +220,4 @@ function marcarEnvio() {
     document.getElementById("envioStandard").checked = true;
   }
 }
+
