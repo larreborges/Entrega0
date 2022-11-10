@@ -19,6 +19,7 @@ function verifyPassword() {
   return true;
 }
 
+
 function verifyUsername() {
   const un = document.getElementById("floatingInput").value;
 
