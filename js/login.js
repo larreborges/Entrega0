@@ -2,17 +2,17 @@ let user = document.getElementById("floatingInput").value;
 let user2 = JSON.stringify(user);
 
 function verifyPassword() {
-  const pw = document.getElementById("floatingPassword").value;
+  const password = document.getElementById("floatingPassword").value;
 
-  if (pw == "") {
+  if (password == "") {
     alert("Por favor, llene la contraseña");
     return false;
   }
-  if (pw.length < 8) {
+  if (password.length < 8) {
     alert("La contraseña debe tener al menos 8 caracteres");
     return false;
   }
-  if (pw.length > 30) {
+  if (password.length > 30) {
     alert("La contraseña debe tener como máximo 30 caracteres");
     return false;
   }
